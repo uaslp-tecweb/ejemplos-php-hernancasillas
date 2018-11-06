@@ -1,8 +1,8 @@
 <?php
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST'){
-    if ($_POST['nombre'] === 'Hernan' && $POST['password'] === '123') {
-        echo 'Bienvenido';
+    if ($_POST['nombre'] == 'Hernan' && $_POST['password'] == '123') {
+        header('Location: welcome.php');
     }
     else
     {
@@ -22,11 +22,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <form>
-        <input type="text" name="nombre" placeholder="Username">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit">
-    </form>
+    <?php
+        if ($_SERVER['REQUEST_METHOD'] == 'GET'){
+            echo'
+                <h1>Login</h1>
+                <form method="POST">
+                    <input type="text" name="nombre" placeholder="Username">
+                    <input type="password" name="password" placeholder="Password">
+                    <input type="submit">
+                </form>
+            ';
+        }
+    ?>
 </body>
 </html>
