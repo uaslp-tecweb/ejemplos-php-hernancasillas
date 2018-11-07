@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <title>Welcome</title>
+    <title>Error</title>
 </head>
 <body>
-    <h1>Welcome</h1>
-    <?php if (isset($_GET['nombre'])) : ?>
-        <p>Your name is: <?php echo $_GET['nombre'] ?> </p>
-    <?php endif; ?>
+    <h1>Error on Login</h1>
 </body>
 </html>
