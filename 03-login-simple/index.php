@@ -19,37 +19,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     }
     else
     {
-        header('Location: error.php');
+        header('Location: error.php?desc=User or password not valid');
     }
 }
 
 function verifyLogin($user, $password)
 {
-    var_dump($user);
-    var_dump($password);
+    global $usuarios;
 
     foreach($usuarios as $usr => $pwd)
     {
-        var_dump($usr);
-        var_dump($pwd);
-        if($usuario === $usr && $password === $pwd)
+        if($user === $usr && $password === $pwd)
             return true;
     }
+
     return false;
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="style.css">
-    <title>Login</title>
-</head>
-<body>
+    <?php include('header.php');?>
     <?php if ($_SERVER['REQUEST_METHOD'] == 'GET') : ?>
         <h1>Login</h1>
         <form method="POST">
@@ -58,5 +46,7 @@ function verifyLogin($user, $password)
             <input type="submit">
         </form>
     <?php endif; ?>
+    <?php include('footer.php');?>
+
 </body>
 </html>
