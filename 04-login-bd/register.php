@@ -2,6 +2,11 @@
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+    include('DataBase.php');
+
+        $bd = new DataBase();
+        
+        $bd->conectar();
 
     $nombre = $_POST['username'];
     $password = $_POST['password'];
@@ -9,22 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
     if($password === $password2)
     {
-        include('DataBase.php');
-
-        $bd = new DataBase();
-        
-        $bd->conectar();
-        
         $bd->creaUsuario($nombre, $password);
-        
-        $bd->desconectar();
+        header('Location: login.php');
     } 
     else
     {
         echo 'Password is not the same';
     }
 
-    
+    $bd->desconectar();
 }
 
 

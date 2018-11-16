@@ -1,5 +1,7 @@
 <?php
 
+session_start(); //DEBE SER LA PRIMER LINEA DEL SCRIPT
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
     $nombre = $_POST['username'];
@@ -27,7 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             echo '<br>The user ' . $nombre . ' doesn\'t exist  or password is wrong xD';
         }
         else{
-            echo '<br>Welcome ' . $nombre;
+            $_SESSION['usuario'] = $nombre;
+            header('Location: contenidoProtegido.php');
         }
         
 
