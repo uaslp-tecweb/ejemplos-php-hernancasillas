@@ -41,8 +41,10 @@ class DataBase
     public function creaUsuario($nombre, $password)
     {
         $sql = "INSERT INTO usuarios (idUsuario, nombre, password) 
-        VALUES (NULL, '$nombre', '$password')";
-        $resultado = $this->conexion->exec($sql);
+        VALUES (NULL, :nombre, :password)";
+        //$resultado = $this->conexion->exec($sql);
+        $sentencia = $this->conexion->prepare($sql);
+        $resultado = $sentencia->execute(array(':nombre' => $nombre, ':password' => $password));
         var_dump($resultado);
         echo 'Renglones agregados: ' . $resultado;
     }

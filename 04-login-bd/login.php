@@ -22,14 +22,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $bd = new PDO($dsn, $username, $passwd);   
         echo '<br><br>Connected to: ' . $dsn . ' :D ';
 
-        $consulta = "SELECT * FROM usuarios WHERE nombre='$nombre' AND password='$password'";
-        $resultado = $bd->query($consulta); 
+        $consulta = "SELECT * FROM usuarios WHERE nombre=:nombre AND password=:password";
+        $sentencia = $bd->prepare($consulta);
+        $resultado = $sentencia->execute(array(':nombre' => $nombre, ':password' => $password));
+        //$resultado = $bd->query($consulta); 
 
-        if($resultado->fetch() === false){
+        if($resultado === false)
+        {
+            die('Oops! SQL is wrong or server is down');
+        }
+        if($sentencia->fetch() === false){
             echo '<br>The user ' . $nombre . ' doesn\'t exist  or password is wrong xD';
         }
         else{
             $_SESSION['usuario'] = $nombre;
+            //echo 'Bienvenido ' . $nombre;
             header('Location: contenidoProtegido.php');
         }
         
