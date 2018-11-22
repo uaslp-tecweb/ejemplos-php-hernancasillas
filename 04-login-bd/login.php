@@ -22,32 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $bd = new PDO($dsn, $username, $passwd);   
         echo '<br><br>Connected to: ' . $dsn . ' :D ';
 
-        $consulta = "SELECT * FROM usuarios WHERE nombre=:nombre AND password=:password";
+        $consulta = "SELECT * FROM usuarios WHERE nombre=:nombre";
         $sentencia = $bd->prepare($consulta);
-        $resultado = $sentencia->execute(array(':nombre' => $nombre, ':password' => $password));
-        //$resultado = $bd->query($consulta); 
+        $resultado = $sentencia->execute(array(':nombre' => $nombre));
 
-        if($resultado === false)
+        $usuario = $sentencia->fetchObject();
+
+        if($resultado === false)    //Error en la consulta
         {
             die('Oops! SQL is wrong or server is down');
         }
-        if($sentencia->fetch() === false){
+        if($usuario === false){ //No existe usuario con ese nombre
             echo '<br>The user ' . $nombre . ' doesn\'t exist  or password is wrong xD';
         }
-        else{
-            $_SESSION['usuario'] = $nombre;
+        else if(password_verify($password, $usuario->password)){
+            $_SESSION['usuario'] = $usuario->nombre;
             //echo 'Bienvenido ' . $nombre;
             header('Location: contenidoProtegido.php');
         }
-        
-
-        /*while($renglon = $resultado->fetch()){
-            if($nombre == $renglon['nombre'])
-            {
-                echo 'User found...';
-            }
-        }*/
-                
     }
     catch(PDOException $excepcion)
     {

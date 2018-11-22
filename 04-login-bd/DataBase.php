@@ -44,7 +44,7 @@ class DataBase
         VALUES (NULL, :nombre, :password)";
         //$resultado = $this->conexion->exec($sql);
         $sentencia = $this->conexion->prepare($sql);
-        $resultado = $sentencia->execute(array(':nombre' => $nombre, ':password' => $password));
+        $resultado = $sentencia->execute(array(':nombre' => $nombre, ':password' => password_hash($password, PASSWORD_BCRYPT)));
         var_dump($resultado);
         echo 'Renglones agregados: ' . $resultado;
     }
